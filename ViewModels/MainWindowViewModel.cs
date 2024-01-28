@@ -20,7 +20,7 @@ namespace CV18.ViewModels
             set => Set(ref _Title, value);
         }
         #endregion
-        #region Команды
+        /*#region Команды
 
         #region Команда закрытия приложения
         public ICommand CloseApplicationCommand { get; }
@@ -35,6 +35,6 @@ namespace CV18.ViewModels
         public MainWindowViewModel()
         {
             CloseApplicationCommand = new ActionCommand(OnCloseApplicationCommandExecuted, CanCloseApplicationCommandExecute);
-        }
+        }*/
     }
 }
