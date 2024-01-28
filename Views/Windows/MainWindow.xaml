@@ -11,7 +11,11 @@
     <Window.DataContext>
         <vm:MainWindowViewModel/> 
     </Window.DataContext>
-    <Grid>
-
-    </Grid>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="Exit" Command="{Binding Path=CloseApplicationCommand}"/>
+            </MenuItem>
+        </Menu>
+    </DockPanel>
 </Window>
