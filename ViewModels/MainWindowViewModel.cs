@@ -12,6 +12,7 @@ namespace CV18.ViewModels
 {
     internal class MainWindowViewModel : ViewModel
     {
+        #region Свойства окна
         #region Свойство названия окна
         private string _Title = "Main window";
         public string Title
@@ -20,8 +21,16 @@ namespace CV18.ViewModels
             set => Set(ref _Title, value);
         }
         #endregion
+        #region Свойство блока отображения подключения к интернету
+        private string _Connect = "Нет подключения к интернету!";
+        public string Connect
+        {
+            get => _Connect;
+            set => Set(ref _Connect, value);
+        }
+        #endregion
+        #endregion
         #region Команды
-
         #region Команда закрытия приложения
         public ICommand CloseApplicationCommand { get; }
         private void OnCloseApplicationCommandExecuted(object p)

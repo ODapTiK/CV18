@@ -18,7 +18,7 @@
             </MenuItem>
         </Menu>
         <StatusBar DockPanel.Dock="Bottom" Height="30">
-            
+            <TextBlock Text="{Binding Path=Connect}"></TextBlock>
         </StatusBar>
         <TabControl>
             <TabItem Header="Данные о зараженных">
