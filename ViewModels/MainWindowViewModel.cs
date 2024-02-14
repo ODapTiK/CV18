@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using CV18.Infrastructure.Commands;
 using System.Windows;
+using OxyPlot;
 
 namespace CV18.ViewModels
 {
@@ -22,7 +23,7 @@ namespace CV18.ViewModels
         }
         #endregion
         #region Свойство блока отображения подключения к интернету
-        private string _Connect = "Нет подключения к интернету!";
+        private string _Connect = "Готов!";
         public string Connect
         {
             get => _Connect;

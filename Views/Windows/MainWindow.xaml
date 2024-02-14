@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:oxy="http://oxyplot.org/wpf"
         xmlns:local="clr-namespace:CV18"
         xmlns:vm="clr-namespace:CV18.ViewModels"
         mc:Ignorable="d"
@@ -18,7 +19,7 @@
             </MenuItem>
         </Menu>
         <StatusBar DockPanel.Dock="Bottom" Height="30">
-            <TextBlock Text="{Binding Path=Connect}"></TextBlock>
+            <TextBlock Text="{Binding Path=Connect, StringFormat=Статус: {0}}"></TextBlock>
         </StatusBar>
         <TabControl>
             <TabItem Header="Данные о зараженных">
@@ -31,7 +32,11 @@
                     <ListBox Grid.Row="0" ></ListBox>
                 </Grid>
             </TabItem>
-            <TabItem Header="График роста заболеваемости"/>
+            <TabItem Header="График роста заболеваемости">
+                <oxy:PlotView>
+                    
+                </oxy:PlotView>
+            </TabItem>
         </TabControl>
     </DockPanel>
 </Window>
