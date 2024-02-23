@@ -25,17 +25,22 @@
             <TabItem Header="Данные о зараженных">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="113*"/>
+                        <ColumnDefinition Width="81*"/>
+                        <ColumnDefinition Width="32*"/>
                         <ColumnDefinition Width="284*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Row="0" Text="Страны(Регионы)" Height="20" VerticalAlignment="Top"></TextBlock>
-                    <ListBox Grid.Row="0" ></ListBox>
+                    <TextBlock Grid.Row="0" Text="Страны(Регионы)" Height="20" VerticalAlignment="Top" Grid.ColumnSpan="2"></TextBlock>
+                    <ListBox Grid.Row="0" Grid.ColumnSpan="2" ></ListBox>
                 </Grid>
             </TabItem>
-            <TabItem Header="График роста заболеваемости">
-                <oxy:PlotView>
-                    
-                </oxy:PlotView>
+            <TabItem Header="{Binding Path=Header}">
+                <oxy:Plot>
+                    <oxy:Plot.Axes>
+                        <oxy:LinearAxis Position="Bottom"/>
+                        <oxy:LinearAxis Position="Left"/>
+                    </oxy:Plot.Axes>
+                    <oxy:LineSeries Color="Red" ItemsSource="{Binding Path=DataPoints}"/>
+                </oxy:Plot>                    
             </TabItem>
         </TabControl>
     </DockPanel>

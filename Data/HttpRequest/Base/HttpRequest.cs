@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -8,27 +9,28 @@ using System.Threading.Tasks;
 
 namespace CV18.Data.HttpRequest.Base
 {
-    internal class HttpRequest
+    internal class BaseHttpRequest
     {
-        public HttpRequest(string url)
+
+        public BaseHttpRequest(string url)
         {
             adress = url;
         }
 
-        public string adress { get; set; }
+        public string adress;
 
         public bool IsInternetConnectionAvailiable() => System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable();
         public async Task<Stream> GetStream()
         {
-            var client = new HttpClient();
-            var answer = await client.GetAsync(adress, HttpCompletionOption.ResponseHeadersRead);
-            return await answer.Content.ReadAsStreamAsync();
+            HttpClient CV18Client = new HttpClient();
+            var serverAnswer = await CV18Client.GetAsync(adress, HttpCompletionOption.ResponseHeadersRead);
+            return await serverAnswer.Content.ReadAsStreamAsync();
         }
 
-        public IEnumerable<string> GetLines()
+        public virtual IEnumerable<string> GetLines()
         {
-            var lines = GetStream().Result;
-            var dataReader = new StreamReader(lines);
+            using var dataStream = GetStream().Result;
+            using var dataReader = new StreamReader(dataStream);
             while (!dataReader.EndOfStream)
             {
                 var line = dataReader.ReadLine();
