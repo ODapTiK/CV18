@@ -25,11 +25,17 @@ namespace CV18.ViewModels
             this.provinceName = provinceName;
             this.countryName = countryName;
         }
-        private DateTime[] GetDateTimes() => request.GetLines().First().Split(',').Skip(4).Select(x => DateTime.Parse(x, CultureInfo.InvariantCulture)).ToArray();
-        private IEnumerable<(string country, string province, int[] countsOfInfected)> GetData()
+        private async Task<DateTime[]> GetDateTimes()
+        {
+            IAsyncEnumerable<string> sequence = request.GetLines();
+            List<string> data = await sequence.ToListAsync();
+            DateTime[] dates = data.First().Split(',').Skip(4).Select(x => DateTime.Parse(x, CultureInfo.InvariantCulture)).ToArray();
+            return dates;
+        }
+        private async IAsyncEnumerable<(string country, string province, int[] countsOfInfected)> GetData()
         {
             var lines = request.GetLines().Skip(1).Select(x => x.Split(','));
-            foreach (var line in lines)
+            await foreach (var line in lines)
             {
                 var province = line[0].Trim();
                 var country = line[1].Trim(' ', '"');
@@ -37,18 +43,20 @@ namespace CV18.ViewModels
                 yield return (country, province, countsOfInfected);
             }
         }
-        public List<DataPoint> CreatePlot()
+        public async Task<DataPoint[]> CreatePlot()
         {
             if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
             {
-                var country = GetData().First(x => x.country.Equals("Belarus", StringComparison.OrdinalIgnoreCase));
+                IAsyncEnumerable<(string country, string province, int[] countsOfInfected)> sequence = GetData(); 
+                List<(string country, string province, int[] countsOfInfected)> dataList = await sequence.ToListAsync();
+                var country = dataList.First(x => x.country.Equals("Belarus", StringComparison.OrdinalIgnoreCase));
                 var data = new List<DataPoint>();
-                var a = GetDateTimes().Count();
+                var a = GetDateTimes().Result.Count();
                 for (int i = 0; i < a; i++)
                 {
                     data.Add(new DataPoint(i, country.countsOfInfected[i]));
                 }
-                return data;
+                return data.ToArray();
             }
             else { 
                 Console.WriteLine("Нет подключения к интернету");

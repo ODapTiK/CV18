@@ -62,7 +62,7 @@ namespace CV18.ViewModels
         {
             CloseApplicationCommand = new ActionCommand(OnCloseApplicationCommandExecuted, CanCloseApplicationCommandExecute);
             var plot = new PlotViewModel("Belarus");
-            DataPoints = plot.CreatePlot();
+            DataPoints = plot.CreatePlot().Result;
         }
     }
 }

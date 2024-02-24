@@ -14,9 +14,9 @@ namespace CV18.Data.HttpRequest
         {
 
         }
-        public override IEnumerable<string> GetLines()
+        public override async IAsyncEnumerable<string> GetLines()
         {
-            var lines = GetStream().Result;
+            var lines = await GetStream().ConfigureAwait(true);
             var dataReader = new StreamReader(lines);
             while (!dataReader.EndOfStream)
             {
