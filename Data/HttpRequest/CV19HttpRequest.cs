@@ -14,16 +14,5 @@ namespace CV18.Data.HttpRequest
         {
 
         }
-        public override IEnumerable<string> GetLines()
-        {
-            var lines = GetStream().Result;
-            var dataReader = new StreamReader(lines);
-            while (!dataReader.EndOfStream)
-            {
-                var line = dataReader.ReadLine();
-                if (string.IsNullOrWhiteSpace(line)) continue;
-                yield return line.Replace("Korea,", "Korea-");
-            }
-        }
     }
 }

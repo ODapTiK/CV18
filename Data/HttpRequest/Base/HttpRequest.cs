@@ -23,11 +23,11 @@ namespace CV18.Data.HttpRequest.Base
         public async Task<Stream> GetStream()
         {
             HttpClient CV18Client = new HttpClient();
-            var serverAnswer = await CV18Client.GetAsync(adress, HttpCompletionOption.ResponseHeadersRead);
+            var serverAnswer = await CV18Client.GetAsync(adress, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false);           
             return await serverAnswer.Content.ReadAsStreamAsync();
         }
 
-        public virtual IEnumerable<string> GetLines()
+        public IEnumerable<string> GetLines()
         {
             using var dataStream = GetStream().Result;
             using var dataReader = new StreamReader(dataStream);

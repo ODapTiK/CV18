@@ -33,7 +33,7 @@
                     <ListBox Grid.Row="0" Grid.ColumnSpan="2" ></ListBox>
                 </Grid>
             </TabItem>
-            <TabItem Header="{Binding Path=Header}">
+            <TabItem Header="График роста подтвержденных случаев">
                 <oxy:Plot>
                     <oxy:Plot.Axes>
                         <oxy:LinearAxis Position="Bottom"/>

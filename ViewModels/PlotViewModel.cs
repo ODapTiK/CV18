@@ -28,10 +28,10 @@ namespace CV18.ViewModels
         private DateTime[] GetDateTimes() => request.GetLines().First().Split(',').Skip(4).Select(x => DateTime.Parse(x, CultureInfo.InvariantCulture)).ToArray();
         private IEnumerable<(string country, string province, int[] countsOfInfected)> GetData()
         {
-            var lines = request.GetLines().Skip(1).Select(x => x.Split(','));
+            var lines = request.GetLines().Skip(1).Select(x => x.Replace("Korea, ", "Korea").Replace("Bonaire,", "Bonaire").Replace("Saint Helena, Ascension and Tristan da Cunha", "Saint Helena Ascension and Tristan da Cunha").Split(','));
             foreach (var line in lines)
             {
-                var province = line[0].Trim();
+                var province = line[0].Trim(' ', '"');
                 var country = line[1].Trim(' ', '"');
                 var countsOfInfected = line.Skip(4).Select(int.Parse).ToArray();
                 yield return (country, province, countsOfInfected);
@@ -41,7 +41,7 @@ namespace CV18.ViewModels
         {
             if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
             {
-                var country = GetData().First(x => x.country.Equals("Belarus", StringComparison.OrdinalIgnoreCase));
+                var country = GetData().First(x => x.country.Equals("Zimbabwe", StringComparison.OrdinalIgnoreCase));
                 var data = new List<DataPoint>();
                 var a = GetDateTimes().Count();
                 for (int i = 0; i < a; i++)
